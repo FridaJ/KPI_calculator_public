@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+    <style>
+        body {
+            background-color: lightblue;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            margin-top: 8%;
+            margin-left: 25%;
+            margin-right: 25%; /* Adjust right margin */
+            height: 400px;
+            padding: 50px; /* Add padding */
+            background-color: rgba(230, 230, 140, 1); /* Background color for the container */
+            border-radius: 10px; /* Add rounded corners */
+            box-shadow: 1px 1px 10px rgba(0, 128, 128, 1); /* Add shadow */
+
+        }
+        .left-align {
+            text-align: left;
+            margin-left: 40px;
+            margin-right: 40px;
+            margin-top: 10px;
+            margin-bottom: 60px; /* Add margin to the bottom */
+            font-size: 20px; /* Adjust font size */
+            background-color: #F8F8FF; /* Background color for the left-aligned text */
+            border: 2px solid darkgrey;
+            border-radius: 5px; /* Add rounded corners */
+            padding: 10px;
+        }
+        .download-btn {
+            padding: 10px 20px;
+            margin-top: 50px;
+            font-size: 16px;
+            background-color: teal;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background-color: darkturquoise;
+        }
+        .spinner {
+            display: none; /* Initially hide the spinner */
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #fff; /* Adjust the color as needed */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite; /* Add animation */
+            margin-left: 5px; /* Add margin to the left */
+            vertical-align: middle; /* Align vertically */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VR reporting made easy! </h1>
+        <div class="left-align">
+            <p>Here, you can download the KPI values for the current projects in the PPS database. The data is in Excel format with KPIs for each year since 2022, one year per sheet. In addition, a log file with information about used projects. Download a zip file by clicking the button below, this may take up to 30 seconds. </p>
+        </div>
+        <a class="download-btn" href="/download" download>Download File</a>
+        <p style="margin-top: 40px;">...and always remember to update the database! &#128521;</p>
+    </div>
+
+    <script>
+        function startDownload() {
+            var button = document.getElementById("download-btn");
+
+            // Hide the button during file creation and download process
+            button.style.display = "none";
+
+            // Make an AJAX request to trigger the Flask route /download
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/download", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    // Once the request is complete, check if it was successful
+                    if (xhr.status === 200) {
+                        // If successful, create a blob from the response and initiate download
+                        var blob = new Blob([xhr.response], { type: "application/zip" });
+                        var url = window.URL.createObjectURL(blob);
+                        var a = document.createElement("a");
+                        a.href = url;
+                        a.download = "KPI_files.zip";
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                    } else {
+                        // If request fails, log the error
+                        console.error('Request failed:', xhr.status);
+                        // Show the button again in case of failure
+                        button.style.display = "block";
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
