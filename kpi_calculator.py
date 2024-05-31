@@ -13,15 +13,15 @@ def get_kpis():
     ##### Using REST-api to get data from the FileMaker database
     
     fms_application = fmrest.Server('https://fmapp19-p.gu.gu.se',
-                       user = 'api',
-                       password = 'pythonR3st',
+                       user = 'xxxxx',
+                       password = 'xxxxx',
                        database = 'pps_data',
                        layout = 'application',
                        api_version = 'vLatest')
     
     fms_project = fmrest.Server('https://fmapp19-p.gu.gu.se',
-                       user = 'api',
-                       password = 'pythonR3st',
+                       user = 'xxxxx',
+                       password = 'xxxxx',
                        database = 'pps_data',
                        layout = 'project',
                        api_version = 'vLatest')
