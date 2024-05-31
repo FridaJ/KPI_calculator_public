@@ -3,7 +3,7 @@ Python Flask app presenting an xlsx-file with project KPIs for PPS VR reporting
 
 ### Running the app
 After setting up the files with the correct structure (see below), the app is run using the command
->\$python app.py
+>\$python app_new.py
 
 The index page is then served on http://127.0.0.1:5000
 This page will be used from the PPS Filemaker Project Database using the Filemaker "run from url" command.
@@ -11,10 +11,10 @@ This page will be used from the PPS Filemaker Project Database using the Filemak
 ### File structure
 The .py files should both be in the main directory, and the index.html file should be in a subdirectory named 'templates'
 ```
-|______ app.py
+|______ app_new.py
 |______ kpi_calculator.py
 |______ templates
-            |_______ index.html
+            |_______ index_new.html
 ```
 
 ### Dependencies
